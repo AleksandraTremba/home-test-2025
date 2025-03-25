@@ -14,7 +14,7 @@ After reviewing the intern's code, I have made a few notes that I will share bel
 * The credit logic seems to be different from the one in the assignment (missing credit score calculation, the loan amount isn't maximized, incorrect maximum loan period)
 
 ## Most important shortcoming
-Even though custom exceptions are done really nicely, responses for generic java exceptions have java error
+Even though custom exceptions are done nicely, responses for generic java exceptions have java error
 messages instead of intended "An unexpected error occurred", which could lead to serious data leak by exposing stack traces.
 I noticed that specifically when any of request parameters are null, because even though it throws an error with a message, it still has an HTTP 200 OK response, which is wrong and not an expected behaviour.
 It happened due to service just returning a loan decision, but with an exception error message, instead of throwing the exception itself, which resulted in this shortcoming.
