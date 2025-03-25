@@ -4,12 +4,13 @@ After reviewing the intern's code, I have made a few notes that I will share bel
 ### What was done nicely
 * The structure of the code is pretty logical, the folders make a nice division between classes' purpose
 * Custom exceptions are helpful in identifying the errors and sending an error message to the user
+* The use of constants makes it easy to manage values
 * All classes and methods are documented, and it's easy to tell what each of them are for
 
 ### What could be done better
-* Magic numbers in getCreditModifier method in DecisionEngine class could be also put in DecisionEngineConstants, so that it would be easy to understand what they mean, or be easily changed.
-* Loan period slider says 6 months is the starting period for loan, but it is in fact 12. The mismatch could be confusing.
-* DecisionEngine could be divided into separate classes, as it handles business logic, validation, and exception handling, which goes again SOLID architecture.
+* Magic numbers in getCreditModifier method in DecisionEngine class could be also put in DecisionEngineConstants, so that it would be easy to understand what they mean, or be easily changed
+* Loan period slider says 6 months is the starting period for loan, but it is in fact 12. The mismatch could be confusing
+* DecisionEngine could be divided into separate classes, as it handles business logic, validation, and exception handling, which goes again SOLID architecture
 * The credit logic seems to be different from the one in the assignment (missing credit score calculation, the loan amount isn't maximized, incorrect maximum loan period)
 
 ## Most important shortcoming
