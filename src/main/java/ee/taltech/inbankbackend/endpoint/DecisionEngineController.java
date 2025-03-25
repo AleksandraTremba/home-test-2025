@@ -42,7 +42,7 @@ public class DecisionEngineController {
     @PostMapping("/decision")
     public ResponseEntity<DecisionResponse> requestDecision(@RequestBody DecisionRequest request) {
         try {
-            // For now, country will be Estonia for testing purposes. The scope of this function is the Baltic's countries.
+            // For now, country will be Estonia for testing purposes.
             String country = "Estonia";
             Decision decision = decisionEngine.
                     calculateApprovedLoan(request.getPersonalCode(), request.getLoanAmount(), request.getLoanPeriod(), country);
@@ -64,14 +64,12 @@ public class DecisionEngineController {
             response.setErrorMessage(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        } catch (Exception e) {
+        } catch (Exception | UnexpectedException e) {
             response.setLoanAmount(null);
             response.setLoanPeriod(null);
-            response.setErrorMessage("An unexpected error occurred");
+            response.setErrorMessage("An unexpected error occurred!");
 
             return ResponseEntity.internalServerError().body(response);
-        } catch (UnexpectedException e) {
-            throw new RuntimeException(e);
         }
     }
 }

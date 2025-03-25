@@ -43,7 +43,7 @@ public class DecisionEngine {
         try {
             verifyInputs(personalCode, loanAmount, loanPeriod, country);
         } catch (Exception e) {
-            throw new UnexpectedException("Unexpected error occurred");
+            throw new UnexpectedException("Unexpected error occurred!");
         }
 
         int outputLoanAmount;
@@ -126,8 +126,8 @@ public class DecisionEngine {
         }
         int age = getAge(personalCode);
 
-        Integer minAge = DecisionEngineConstants.MINIMUM_AGE_FOR_LOAN.get(country);
-        Integer maxAge = DecisionEngineConstants.MAXIMUN_AGE_FOR_LOAN.get(country);
+        Integer minAge = DecisionEngineConstants.getMinimumAgeForLoan().get(country);
+        Integer maxAge = DecisionEngineConstants.getMaximumAgeForLoan().get(country);
 
         if (minAge == null || maxAge == null) {
             throw new InvalidAgeException("No age limits defined for the specified country: " + country);

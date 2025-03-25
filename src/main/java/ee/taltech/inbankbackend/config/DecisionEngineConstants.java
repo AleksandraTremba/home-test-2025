@@ -1,6 +1,5 @@
 package ee.taltech.inbankbackend.config;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,15 +13,23 @@ public class DecisionEngineConstants {
     public static final Integer SEGMENT_1_CREDIT_MODIFIER = 100;
     public static final Integer SEGMENT_2_CREDIT_MODIFIER = 300;
     public static final Integer SEGMENT_3_CREDIT_MODIFIER = 1000;
-    public static final Map<String, Integer> MINIMUM_AGE_FOR_LOAN =  new HashMap<>();
-    public static final Map<String, Integer> MAXIMUN_AGE_FOR_LOAN =  new HashMap<>();
-    static {
-        MINIMUM_AGE_FOR_LOAN.put("Estonia", 18);
-        MINIMUM_AGE_FOR_LOAN.put("Latvia", 18);
-        MINIMUM_AGE_FOR_LOAN.put("Lithuania", 18);
+    private static final Map<String, Integer> MINIMUM_AGE_FOR_LOAN = Map.of(
+            "Estonia", 18,
+            "Latvia", 18,
+            "Lithuania", 18
+    );
 
-        MAXIMUN_AGE_FOR_LOAN.put("Estonia", 75);
-        MAXIMUN_AGE_FOR_LOAN.put("Latvia", 65);
-        MAXIMUN_AGE_FOR_LOAN.put("Lithuania", 70);
+    private static final Map<String, Integer> MAXIMUM_AGE_FOR_LOAN = Map.of(
+            "Estonia", 75,
+            "Latvia", 65,
+            "Lithuania", 70
+    );
+
+    public static Map<String, Integer> getMinimumAgeForLoan() {
+        return MINIMUM_AGE_FOR_LOAN;
+    }
+
+    public static Map<String, Integer> getMaximumAgeForLoan() {
+        return MAXIMUM_AGE_FOR_LOAN;
     }
 }
