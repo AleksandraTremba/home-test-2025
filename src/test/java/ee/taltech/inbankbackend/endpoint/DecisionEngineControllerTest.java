@@ -1,10 +1,7 @@
 package ee.taltech.inbankbackend.endpoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ee.taltech.inbankbackend.exceptions.InvalidLoanAmountException;
-import ee.taltech.inbankbackend.exceptions.InvalidLoanPeriodException;
-import ee.taltech.inbankbackend.exceptions.InvalidPersonalCodeException;
-import ee.taltech.inbankbackend.exceptions.NoValidLoanException;
+import ee.taltech.inbankbackend.exceptions.*;
 import ee.taltech.inbankbackend.service.Decision;
 import ee.taltech.inbankbackend.service.DecisionEngine;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,9 +52,9 @@ public class DecisionEngineControllerTest {
     @Test
     public void givenValidRequest_whenRequestDecision_thenReturnsExpectedResponse()
             throws Exception, InvalidLoanPeriodException, NoValidLoanException, InvalidPersonalCodeException,
-            InvalidLoanAmountException {
+            InvalidLoanAmountException, InvalidAgeException, UnexpectedException {
         Decision decision = new Decision(1000, 12, null);
-        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt())).thenReturn(decision);
+        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt(), anyString())).thenReturn(decision);
 
         DecisionRequest request = new DecisionRequest("1234", 10L, 10);
 
@@ -84,8 +81,8 @@ public class DecisionEngineControllerTest {
     @Test
     public void givenInvalidPersonalCode_whenRequestDecision_thenReturnsBadRequest()
             throws Exception, InvalidLoanPeriodException, NoValidLoanException, InvalidPersonalCodeException,
-            InvalidLoanAmountException {
-        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt()))
+            InvalidLoanAmountException, InvalidAgeException, UnexpectedException {
+        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt(), anyString()))
                 .thenThrow(new InvalidPersonalCodeException("Invalid personal code"));
 
         DecisionRequest request = new DecisionRequest("1234", 10L, 10);
@@ -113,8 +110,8 @@ public class DecisionEngineControllerTest {
     @Test
     public void givenInvalidLoanAmount_whenRequestDecision_thenReturnsBadRequest()
             throws Exception, InvalidLoanPeriodException, NoValidLoanException, InvalidPersonalCodeException,
-            InvalidLoanAmountException {
-        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt()))
+            InvalidLoanAmountException, InvalidAgeException, UnexpectedException {
+        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt(), anyString()))
                 .thenThrow(new InvalidLoanAmountException("Invalid loan amount"));
 
         DecisionRequest request = new DecisionRequest("1234", 10L, 10);
@@ -142,8 +139,8 @@ public class DecisionEngineControllerTest {
     @Test
     public void givenInvalidLoanPeriod_whenRequestDecision_thenReturnsBadRequest()
             throws Exception, InvalidLoanPeriodException, NoValidLoanException, InvalidPersonalCodeException,
-            InvalidLoanAmountException {
-        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt()))
+            InvalidLoanAmountException, InvalidAgeException, UnexpectedException {
+        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt(), anyString()))
                 .thenThrow(new InvalidLoanPeriodException("Invalid loan period"));
 
         DecisionRequest request = new DecisionRequest("1234", 10L, 10);
@@ -171,8 +168,8 @@ public class DecisionEngineControllerTest {
     @Test
     public void givenNoValidLoan_whenRequestDecision_thenReturnsBadRequest()
             throws Exception, InvalidLoanPeriodException, NoValidLoanException, InvalidPersonalCodeException,
-            InvalidLoanAmountException {
-        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt()))
+            InvalidLoanAmountException, InvalidAgeException, UnexpectedException {
+        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt(), anyString()))
                 .thenThrow(new NoValidLoanException("No valid loan available"));
 
         DecisionRequest request = new DecisionRequest("1234", 1000L, 12);
@@ -200,8 +197,8 @@ public class DecisionEngineControllerTest {
     @Test
     public void givenUnexpectedError_whenRequestDecision_thenReturnsInternalServerError()
             throws Exception, InvalidLoanPeriodException, NoValidLoanException, InvalidPersonalCodeException,
-            InvalidLoanAmountException {
-        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt())).thenThrow(new RuntimeException());
+            InvalidLoanAmountException, InvalidAgeException, UnexpectedException {
+        when(decisionEngine.calculateApprovedLoan(anyString(), anyLong(), anyInt(), anyString())).thenThrow(new RuntimeException());
 
         DecisionRequest request = new DecisionRequest("1234", 10L, 10);
 
